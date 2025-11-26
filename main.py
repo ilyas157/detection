@@ -415,7 +415,7 @@ def main():
         st.error("Impossible de lire cette image.")
         return
 
-    tab_main, tab_tuner = st.tabs(["Analyse principale", "Tuner direct"])
+    tab_main, tab_tuner = st.tabs(["Méthode principale", "Méthode directe"])
 
     with tab_main:
         slider_col1, slider_col2 = st.columns(2)
@@ -435,7 +435,7 @@ def main():
                 max_value=0.95,
                 value=DEFAULT_DIRECT_INTERSECTION_RATIO,
                 step=0.05,
-                help="Pourcentage de recouvrement rectangle/blob exigé pour le match direct.",
+                help="Pourcentage de recouvrement rectangle/cercle exigé pour le match direct.",
             )
 
         st.subheader(f"Image sélectionnée : {selected_path.name}")
@@ -459,9 +459,9 @@ def main():
             st.info("Clique sur “Analyser” pour exécuter l'algorithme. Rien n'est sauvegardé.")
 
     with tab_tuner:
-        st.subheader("Tuner direct (expérimentation)")
+        st.subheader("Méthode directe (expérimentation)")
         tuner_image = st.selectbox(
-            "Image pour le tuner",
+            "Image",
             image_paths,
             index=image_paths.index(selected_path) if selected_path in image_paths else 0,
             format_func=lambda p: p.name,
@@ -493,12 +493,12 @@ def main():
                         blobs,
                         (match_rect, match_blob) if match_rect is not None else None,
                     ),
-                    caption="Rectangles candidats & blobs",
+                    caption="Rectangles candidats & cercles",
                     use_container_width=True,
                 )
             with col_stats:
                 st.write(f"Rectangles retenus : **{len(rects)}**")
-                st.write(f"Blobs valides : **{len(blobs)}**")
+                st.write(f"Cercles valides : **{len(blobs)}**")
                 if match_rect is None:
                     st.error("Aucun match direct avec ces paramètres.")
                 else:
